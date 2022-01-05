@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Header from './header/header.vue';
+import Header from './TheHeader.vue';
 
 export default {
   name: 'HelloWorld',
