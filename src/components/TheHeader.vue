@@ -76,8 +76,8 @@ export default {
         @apply text-gray-400;
       }
       &.login {
-        @apply text-white;
-        background: linear-gradient(160deg, $baby_blue 25%, $mid_blue 75%, $dark_blue 100%);
+        @apply text-white rounded;
+        background: linear-gradient(160deg, $baby_blue 25%, $mid_blue 80%, $dark_blue 100%);
       }
       padding: 0.3rem;
     }

@@ -1,17 +1,20 @@
 <template>
   <div class="home">
-    <Header></Header>
+    <TheHeader></TheHeader>
+    <TheBanner/>
   </div>
 </template>
 
 <script>
-import Header from '../components/Header/header.vue';
+import TheHeader from '@/components/TheHeader.vue';
+import TheBanner from '@/components/TheBanner.vue';
 
 export default {
   name: 'Home',
 
   components: {
-    Header,
+    TheHeader,
+    TheBanner,
   },
 };
 </script>
