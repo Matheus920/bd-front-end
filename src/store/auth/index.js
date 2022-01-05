@@ -60,7 +60,6 @@ export default new Vuex.Store({
         })
         .catch((error) => {
           sessionStorage.removeItem('token');
-          debugger;
           commit(AUTH_LOGIN_FAILED);
           reject(error);
         });
@@ -69,7 +68,6 @@ export default new Vuex.Store({
       try {
         sessionStorage.removeItem('token');
         http.auth = null;
-        console.log(http.auth);
         commit(AUTH_LOGOUT);
         resolve();
       } catch (e) {
