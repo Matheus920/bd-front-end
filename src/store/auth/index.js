@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable import/no-cycle */
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -13,66 +14,69 @@ import {
 const { http } = api.getInstance();
 
 Vue.use(Vuex);
+const state = {
+  loginStatus: '',
+  token: sessionStorage.getItem('token') || null,
+  userInfo: null,
+};
+const getters = {
+  isAuthenticated: (state) => state.token,
+};
+const mutations = {
+  [AUTH_LOGIN_REQUEST]: (state) => {
+    state.loginStatus = 'loading';
+  },
+  [AUTH_LOGIN_SUCCESS]: (state, { accessToken, userInfo }) => {
+    sessionStorage.setItem('token', accessToken);
+    state.token = accessToken;
+    state.loginStatus = 'success';
+    state.userInfo = userInfo;
+  },
+  [AUTH_LOGIN_FAILED]: (state) => {
+    state.token = null;
+    state.loginStatus = 'error';
+  },
+  [AUTH_LOGOUT]: (state) => {
+    state.token = null;
+    state.loginStatus = '';
+    state.userRole = '';
+  },
+};
+const actions = {
+  [AUTH_LOGIN_REQUEST]: ({ commit }, payload) => new Promise((resolve, reject) => {
+    commit(AUTH_LOGIN_REQUEST);
 
-export default new Vuex.Store({
-  state: {
-    loginStatus: '',
-    token: sessionStorage.getItem('token') || null,
-    userInfo: null,
-  },
-  getters: {
-    isAuthenticated: (state) => state.token,
-  },
-  mutations: {
-    [AUTH_LOGIN_REQUEST]: (state) => {
-      state.loginStatus = 'loading';
-    },
-    [AUTH_LOGIN_SUCCESS]: (state, { accessToken, userInfo }) => {
-      sessionStorage.setItem('token', accessToken);
-      console.log(sessionStorage.getItem('token'));
-      state.token = accessToken;
-      state.loginStatus = 'success';
-      state.userInfo = userInfo;
-    },
-    [AUTH_LOGIN_FAILED]: (state) => {
-      state.token = null;
-      state.loginStatus = 'error';
-    },
-    [AUTH_LOGOUT]: (state) => {
-      state.token = null;
-      state.loginStatus = '';
-      state.userRole = '';
-    },
-  },
-  actions: {
-    [AUTH_LOGIN_REQUEST]: ({ commit }, payload) => new Promise((resolve, reject) => {
-      commit(AUTH_LOGIN_REQUEST);
-
-      http({
-        method: 'post',
-        url: '/login',
-        data: payload,
+    http({
+      method: 'post',
+      url: '/login',
+      data: payload,
+    })
+      .then(({ data }) => {
+        http.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`;
+        commit(AUTH_LOGIN_SUCCESS, data);
+        resolve(data);
       })
-        .then(({ data }) => {
-          http.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`;
-          commit(AUTH_LOGIN_SUCCESS, data);
-          resolve(data);
-        })
-        .catch((error) => {
-          sessionStorage.removeItem('token');
-          commit(AUTH_LOGIN_FAILED);
-          reject(error);
-        });
-    }),
-    [AUTH_LOGOUT]: ({ commit }) => new Promise((resolve, reject) => {
-      try {
+      .catch((error) => {
         sessionStorage.removeItem('token');
-        http.auth = null;
-        commit(AUTH_LOGOUT);
-        resolve();
-      } catch (e) {
-        reject(e);
-      }
-    }),
-  },
-});
+        commit(AUTH_LOGIN_FAILED);
+        reject(error);
+      });
+  }),
+  [AUTH_LOGOUT]: ({ commit }) => new Promise((resolve, reject) => {
+    try {
+      sessionStorage.removeItem('token');
+      http.auth = null;
+      commit(AUTH_LOGOUT);
+      resolve();
+    } catch (e) {
+      reject(e);
+    }
+  }),
+};
+
+export default {
+  state,
+  getters,
+  actions,
+  mutations,
+};
