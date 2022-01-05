@@ -2,7 +2,7 @@
   <section class="main-banner">
     <div class="main-banner__text-area">
       <h2 class="main-banner__title">
-        Encontre o <span class="main-banner__emphasis"> melhor </span> passatempo para o seu final
+        Encontre o <span class="main-banner__emphasis"> melhor </span>passatempo para o seu final
         de semana
       </h2>
       <p class="main-banner__description">
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import PartyAnimation from '@/assets/29774-dance-party.json';
+import PartyAnimation from '@/assets/animations/29774-dance-party.json';
 import Lottie from '@/components/Lottie.vue';
 
 export default {

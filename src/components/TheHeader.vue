@@ -1,3 +1,5 @@
+// Reafatorar nomes de classe
+
 <template>
   <header class="main-header">
     <div class="flex w-2/3 gap-4 items-center">
@@ -28,10 +30,10 @@
       </form>
     </div>
     <div class="user-actions w-30 flex w-1/5 gap-1.5">
-      <button class="btn sign-in">
+      <button class="btn sign-in"  @click="handleClickSignIn">
         Sign-in
       </button>
-      <button class="btn login">
+      <button class="btn login" @click="handleClickLogin">
         Login
       </button>
     </div>
@@ -41,6 +43,82 @@
 <script>
 export default {
   name: 'Header',
+  data() {
+    return {
+      isInit: false,
+      isSignIn: false,
+    };
+  },
+  methods: {
+    async handleClickLogin() {
+      this.$gAuth
+        .getAuthCode()
+        .then(async (authCode) => {
+          // on success
+          // eslint-disable-next-line no-unused-vars
+          let data = '';
+          data += `${process.env.VUE_APP_CLIENT_ID}&`;
+          data += `${process.env.VUE_APP_CLIENT_SECRET}&`;
+          data += 'redirect_uri=postmessage&';
+          data += 'grant_type=authorization_code';
+          data += `code=${authCode}&`;
+
+          // Victor server-side
+          // const response = await fetch('https://www.googleapis.com/oauth2/v4/token', {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/x-www-form-urlencoded',
+          //   },
+          //   body: data,
+          // });
+          console.log('authCode', authCode);
+          // console.log('response', response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    handleClickSignIn() {
+      this.$gAuth
+        .signIn()
+        .then((GoogleUser) => {
+          console.log('GoogleUser', GoogleUser);
+          console.log('getId', GoogleUser.getId());
+          console.log('getBasicProfile', GoogleUser.getBasicProfile());
+          console.log('getAuthResponse', GoogleUser.getAuthResponse());
+          console.log(
+            'getAuthResponse',
+            this.$gAuth.GoogleAuth.currentUser.get().getAuthResponse(),
+          );
+          this.isSignIn = this.$gAuth.isAuthorized;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    handleClickSignOut() {
+      this.$gAuth
+        .signOut()
+        .then(() => {
+          // on success do something
+          this.isSignIn = this.$gAuth.isAuthorized;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  created() {
+    // in app
+    const that = this;
+    const checkGauthLoad = setInterval(() => {
+      that.isInit = that.$gAuth.isInit;
+      that.isSignIn = that.$gAuth.isAuthorized;
+      if (that.isInit) clearInterval(checkGauthLoad);
+    }, 1000);
+  },
 };
 </script>
 
