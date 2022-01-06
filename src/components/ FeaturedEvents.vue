@@ -2,21 +2,18 @@
   <section class="featured-events">
     <h2 class="featured-events__title">Principais eventos</h2>
     <div class="featured-events__card-container">
-      <div class="featured-events__card"></div>
-      <div class="featured-events__card"></div>
-      <div class="featured-events__card"></div>
-      <div class="featured-events__card"></div>
-      <div class="featured-events__card"></div>
-      <div class="featured-events__card"></div>
+      <div
+        v-for="(card, index) in featuredCards"
+        :key="index"
+        :class="['featured-events__card', { 'featured-events__card--loading': isLoading }]"
+      ></div>
+      <div class="limit">
+
+      </div>
     </div>
-    <button class="featured-events__btn" @mouseover="play" @mouseleave="pause">
+    <button class="featured-events__btn" @mouseover="playAnimation" @mouseleave="pauseAnimation">
       Descubra mais eventos
-      <Lottie
-        :options="defaultOptions"
-        :height="40"
-        :width="50"
-        @animCreated="handleAnimation"
-      />
+      <Lottie :options="defaultOptions" :height="40" :width="50" @animCreated="handleAnimation" />
     </button>
   </section>
 </template>
@@ -34,17 +31,23 @@ export default {
     return {
       defaultOptions: { animationData: ArrowAnimation, autoplay: false },
       animationSpeed: 1,
+      featuredCards: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
     };
+  },
+  computed: {
+    isLoading() {
+      return true;
+    },
   },
   methods: {
     handleAnimation(anim) {
       this.anim = anim;
     },
-    play() {
+    playAnimation() {
       console.log('anim', this.anim);
       this.anim.play();
     },
-    pause() {
+    pauseAnimation() {
       this.anim.pause();
     },
     onSpeedChange() {
@@ -62,12 +65,20 @@ export default {
     @apply text-xl text-gray-600 font-bold;
   }
   &__card-container {
-    @apply grid grid-cols-3 gap-7 p-4 mt-8 mb-8;
+    position: relative;
+    max-height: 550px;
+    @apply grid grid-cols-3 gap-7 p-10 mt-8 mb-8;
+    .limit {
+      position: absolute;
+      height: 100px;
+      width: 100%;
+      background: linear-gradient(to top, #FAFAFA 0%, rgba(255, 255, 255, 0) 100%);
+    }
     #{ $self }__card {
       @apply bg-gray-300 rounded-sm h-48;
-      // &--loading {
+      &--loading {
         animation: pulse 2s infinite ease-in-out;
-      // }
+      }
     }
   }
   &__btn {
