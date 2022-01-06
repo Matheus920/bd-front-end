@@ -28,13 +28,14 @@ export default {
     this.anim = lottie.loadAnimation({
       container: this.$refs.lavContainer,
       renderer: 'svg',
-      loop: this.options.loop !== true,
-      autoplay: this.options.autoplay !== true,
+      loop: this.options.loop !== false,
+      autoplay: this.options.autoplay !== false,
       animationData: this.options.animationData,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice',
       },
     });
+
     this.$emit('animCreated', this.anim);
   },
 };
