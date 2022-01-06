@@ -7,7 +7,7 @@
         :key="index"
         :class="['featured-events__card', { 'featured-events__card--loading': isLoading }]"
       ></div>
-      <div class="limit">
+      <div class="featured-events__limit">
 
       </div>
     </div>
@@ -21,6 +21,7 @@
 <script>
 import ArrowAnimation from '@/assets/animations/lf20_faorml1q.json';
 import Lottie from '@/components/Lottie.vue';
+import { FEATURED_EVENTS_REQUEST } from '@/store/events/actions';
 
 export default {
   name: 'FeaturedEvents',
@@ -53,6 +54,19 @@ export default {
     onSpeedChange() {
       this.anim.setSpeed(this.animationSpeed);
     },
+    getFeaturedEvents() {
+      this.$store.dispatch(FEATURED_EVENTS_REQUEST, 6)
+        .then((data) => {
+          if (data) this.featuredCards = data;
+          console.log(data);
+        }).catch((err) => {
+        // show tooltip
+          console.log(err);
+        });
+    },
+  },
+  created() {
+    this.getFeaturedEvents();
   },
 };
 </script>
@@ -65,13 +79,10 @@ export default {
     @apply text-xl text-gray-600 font-bold;
   }
   &__card-container {
-    position: relative;
     max-height: 550px;
-    @apply grid grid-cols-3 gap-7 p-10 mt-8 mb-8;
-    .limit {
-      position: absolute;
-      height: 100px;
-      width: 100%;
+    @apply relative grid grid-cols-3 gap-7 p-10 mt-4 mb-8 overflow-hidden;
+    #{ $self }__limit {
+      @apply absolute h-24 w-full bottom-0;
       background: linear-gradient(to top, #FAFAFA 0%, rgba(255, 255, 255, 0) 100%);
     }
     #{ $self }__card {

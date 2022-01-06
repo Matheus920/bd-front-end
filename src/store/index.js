@@ -5,12 +5,14 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 import * as Cookies from 'js-cookie';
 import auth from './auth';
+import events from './events';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     auth,
+    events,
   },
   plugins: [
     createPersistedState({
