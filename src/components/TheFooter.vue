@@ -20,7 +20,7 @@
       </div>
       <section class="footer__base">
         <div class="footer__info">
-          © 2022 GetHere, Inc.·Privacidade·Termos·Mapa do site·Informações da empresa
+          © 2022 GetHere, Inc. · Privacidade · Termos · Mapa do site · Informações da empresa
         </div>
         <div class="footer__media">
         </div>

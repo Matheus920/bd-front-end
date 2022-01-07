@@ -19,6 +19,8 @@ import TheBanner from '@/components/TheBanner.vue';
 import BaseCardModal from '@/components/BaseCardModal.vue';
 import TheFooter from '../components/TheFooter.vue';
 import FeaturedEvents from '../components/FeaturedEvents.vue';
+import { SET_SEARCH_STATUS } from '@/store/events/actions';
+
 // import Categories from '@/components/Categories.vue';
 
 export default {
@@ -41,6 +43,13 @@ export default {
     TheFooter,
     // Categories,
     FeaturedEvents,
+  },
+  watch: {
+    searchEvent: {
+      handler() {
+        this.$store.dispatch(SET_SEARCH_STATUS, 'loading');
+      },
+    },
   },
 };
 </script>

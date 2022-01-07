@@ -1,22 +1,34 @@
 <template>
   <div class="search-preview">
-    <span v-if="searchStatus == 'success'" class="search-preview__label">
-      Alguns eventos que correspondem a '{{ search }}'</span
-    >
     <template v-if="searchStatus == 'error'">
-      <Lottie :options="errorDefaultOptions" :height="100" :width="100" />
-      <span class="search-preview__error-message"> Erro ao realizar busca</span>
+      <Lottie
+        :options="errorDefaultOptions"
+        :height="100"
+        :width="100"
+        :key="'error-animation'"
+      />
+      <span class="search-preview__error-message">
+        Erro ao realizar busca ou nenhuma correspondencia</span
+      >
     </template>
-    <template v-if="true">
-      <Lottie :options="loadingDefaultOptions" :height="400" :width="400" />
+    <template v-else-if="searchStatus == 'loading'">
+      <Lottie
+        :options="loadingDefaultOptions"
+        :height="400"
+        :width="400"
+        :key="'loading-animation'"
+      />
       <span class="search-preview__loading-message"> Carregando...</span>
     </template>
-    <template v-else>
+    <template v-else-if="searchStatus == 'success'">
+      <span class="search-preview__label"> Alguns eventos que correspondem a '{{ search }}'</span>
       <div class="search-preview__cards">
-        <BaseCard class="search-preview__card" />
-        <BaseCard class="search-preview__card" />
-        <BaseCard class="search-preview__card" />
-        <BaseCard class="search-preview__card" />
+        <BaseCard
+          v-for="(event, index) in events"
+          :key="index"
+          class="search-preview__card"
+          :data="event"
+        />
       </div>
       <span class="search-preview__num-results"> Foram encontrados '{{ eventsNum }}' eventos</span>
     </template>
@@ -28,6 +40,7 @@ import BaseCard from '@/components/BaseCard.vue';
 import Lottie from '@/components/Lottie.vue';
 import ErrorAnimation from '@/assets/animations/67782-error.json';
 import LoadingAnimation from '@/assets/animations/hand-loading.json';
+import { SEARCH_EVENTS_REQUEST } from '@/store/events/actions';
 
 export default {
   name: 'HeaderSearchPreview',
@@ -40,7 +53,7 @@ export default {
       debounce: null,
       errorDefaultOptions: { animationData: ErrorAnimation },
       loadingDefaultOptions: { animationData: LoadingAnimation },
-      events: [{}, {}, {}, {}, {}],
+      events: [],
     };
   },
   props: {
@@ -51,19 +64,25 @@ export default {
   },
   computed: {
     searchStatus() {
-      console.log(this.$store.getters.searchEventsStatus);
       return this.$store.getters.searchEventsStatus;
     },
     eventsNum() {
-      return 5;
+      return this.events.length;
     },
   },
   methods: {
     searchEvents(search) {
-      console.log(search);
+      this.$store
+        .dispatch(SEARCH_EVENTS_REQUEST, search)
+        .then((data) => {
+          if (data) this.events = data;
+        })
+        .catch((err) => {
+          // show tooltip
+          console.log(err);
+        });
     },
     debounceSearch(search) {
-      // this.$emit('input-search', search);
       clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {
         this.searchEvents(search);
@@ -137,6 +156,7 @@ export default {
       box-shadow: rgba(128, 128, 133, 0.2) 0px 7px 29px 0px;
       border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.18);
+      max-width: 30%;
     }
   }
   &__num-results {

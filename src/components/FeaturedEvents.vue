@@ -6,6 +6,7 @@
         v-for="(card, index) in featuredCards"
         :key="index"
         :isLoading='isLoading'
+        :data='card'
       ></BaseCard>
       <div class="featured-events__limit">
 
@@ -39,12 +40,12 @@ export default {
     return {
       defaultOptions: { animationData: ArrowAnimation, autoplay: false },
       animationSpeed: 1,
-      featuredCards: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+      featuredCards: [],
     };
   },
   computed: {
     isLoading() {
-      return true;
+      return this.$store.getters.featuredEventsStatus === 'loading';
     },
   },
   methods: {
@@ -62,9 +63,9 @@ export default {
       this.anim.setSpeed(this.animationSpeed);
     },
     getFeaturedEvents() {
-      this.$store.dispatch(FEATURED_EVENTS_REQUEST, 6)
+      this.$store.dispatch(FEATURED_EVENTS_REQUEST, 9)
         .then((data) => {
-          if (data) this.featuredCards = data;
+          if (data) this.featuredCards = data.events;
           console.log(data);
         }).catch((err) => {
         // show tooltip
@@ -84,7 +85,7 @@ export default {
 <style lang="scss">
 .featured-events {
   $self: &;
-  @apply flex flex-col mt-12 mb-12;
+  @apply flex flex-col mt-24 mb-12;
   &__title {
     @apply text-xl text-gray-600 font-bold;
   }

@@ -11,6 +11,10 @@ import {
   SEARCH_EVENTS_REQUEST,
   SEARCH_EVENTS_SUCCESS,
   SEARCH_EVENTS_FAILED,
+  GET_EVENT_REQUEST,
+  GET_EVENT_SUCCESS,
+  GET_EVENT_FAILED,
+  SET_SEARCH_STATUS,
   SELECT_EVENT,
 } from './actions';
 
@@ -21,10 +25,12 @@ const state = {
   featuredEventsStatus: '',
   searchEventsStatus: '',
   selectedEventId: null,
+  eventStatus: '',
 };
 const getters = {
-  isfeaturedEventsLoading: (state) => state.featuredEventsStatus,
+  featuredEventsStatus: (state) => state.featuredEventsStatus,
   searchEventsStatus: (state) => state.searchEventsStatus,
+  eventStatus: (state) => state.eventStatus,
   selectedEventId: (state) => state.selectedEventId,
   isSelectedEvent: (state) => state.selectedEventId !== null,
 };
@@ -50,6 +56,18 @@ const mutations = {
   [SELECT_EVENT]: (state, event) => {
     state.selectedEventId = event;
   },
+  [SET_SEARCH_STATUS]: (state, status) => {
+    state.searchEventsStatus = status;
+  },
+  [GET_EVENT_REQUEST]: (state) => {
+    state.searchEventsStatus = 'loading';
+  },
+  [GET_EVENT_SUCCESS]: (state) => {
+    state.eventStatus = 'success';
+  },
+  [GET_EVENT_FAILED]: (state) => {
+    state.eventStatus = 'error';
+  },
 };
 const actions = {
   [FEATURED_EVENTS_REQUEST]: ({ commit }, limit) => new Promise((resolve, reject) => {
@@ -57,7 +75,7 @@ const actions = {
 
     http({
       method: 'get',
-      url: `/events?limit=${limit}`,
+      url: `/events/available?page=1&pagesize=${limit}`,
     })
       .then(({ data }) => {
         commit(FEATURED_EVENTS_SUCCESS);
@@ -70,10 +88,9 @@ const actions = {
   }),
   [SEARCH_EVENTS_REQUEST]: ({ commit }, search) => new Promise((resolve, reject) => {
     commit(SEARCH_EVENTS_REQUEST);
-
     http({
       method: 'get',
-      url: `/events?search=${search}`,
+      url: `/events?name=${search}`,
     })
       .then(({ data }) => {
         commit(SEARCH_EVENTS_SUCCESS);
@@ -87,6 +104,25 @@ const actions = {
   [SELECT_EVENT]: ({ commit }, event) => {
     commit(SELECT_EVENT, event);
   },
+  [SET_SEARCH_STATUS]: ({ commit }, status) => {
+    commit(SET_SEARCH_STATUS, status);
+  },
+  [GET_EVENT_REQUEST]: ({ commit }, eventId) => new Promise((resolve, reject) => {
+    commit(GET_EVENT_REQUEST);
+
+    http({
+      method: 'get',
+      url: `/events/${eventId}`,
+    })
+      .then(({ data }) => {
+        commit(GET_EVENT_SUCCESS);
+        resolve(data);
+      })
+      .catch((error) => {
+        commit(GET_EVENT_FAILED);
+        reject(error);
+      });
+  }),
 };
 
 export default {
