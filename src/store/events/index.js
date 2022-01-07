@@ -11,6 +11,7 @@ import {
   SEARCH_EVENTS_REQUEST,
   SEARCH_EVENTS_SUCCESS,
   SEARCH_EVENTS_FAILED,
+  SELECT_EVENT,
 } from './actions';
 
 const { http } = api.getInstance();
@@ -19,10 +20,13 @@ Vue.use(Vuex);
 const state = {
   featuredEventsStatus: '',
   searchEventsStatus: '',
+  selectedEventId: null,
 };
 const getters = {
   isfeaturedEventsLoading: (state) => state.featuredEventsStatus,
   searchEventsStatus: (state) => state.searchEventsStatus,
+  selectedEventId: (state) => state.selectedEventId,
+  isSelectedEvent: (state) => state.selectedEventId !== null,
 };
 const mutations = {
   [FEATURED_EVENTS_REQUEST]: (state) => {
@@ -42,6 +46,9 @@ const mutations = {
   },
   [SEARCH_EVENTS_FAILED]: (state) => {
     state.searchEventsStatus = 'error';
+  },
+  [SELECT_EVENT]: (state, event) => {
+    state.selectedEventId = event;
   },
 };
 const actions = {
@@ -77,6 +84,9 @@ const actions = {
         reject(error);
       });
   }),
+  [SELECT_EVENT]: ({ commit }, event) => {
+    commit(SELECT_EVENT, event);
+  },
 };
 
 export default {

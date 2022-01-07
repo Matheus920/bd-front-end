@@ -7,6 +7,7 @@
       <!-- <Categories /> -->
       <FeaturedEvents />
     </div>
+    <BaseCardModal />
     <TheFooter />
   </div>
 </template>
@@ -15,6 +16,7 @@
 import TheHeader from '@/components/TheHeader.vue';
 import HeaderSearchPreview from '@/components/HeaderSearchPreview.vue';
 import TheBanner from '@/components/TheBanner.vue';
+import BaseCardModal from '@/components/BaseCardModal.vue';
 import TheFooter from '../components/TheFooter.vue';
 import FeaturedEvents from '../components/FeaturedEvents.vue';
 // import Categories from '@/components/Categories.vue';
@@ -35,6 +37,7 @@ export default {
     TheHeader,
     HeaderSearchPreview,
     TheBanner,
+    BaseCardModal,
     TheFooter,
     // Categories,
     FeaturedEvents,
