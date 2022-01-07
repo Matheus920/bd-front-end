@@ -2,8 +2,8 @@
   <section class="main-banner">
     <div class="main-banner__text-area">
       <h2 class="main-banner__title">
-        Encontre o <span class="main-banner__emphasis"> melhor </span>passatempo para o seu final
-        de semana
+        Encontre o <span class="main-banner__emphasis"> melhor </span>passatempo para o seu final de
+        semana
       </h2>
       <p class="main-banner__description">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -13,9 +13,12 @@
         cupidatat non proident, sunt in c
       </p>
     </div>
-    <figure class="main-banner_figute">
+    <div class="main-banner__figure">
       <Lottie :options="defaultOptions" :height="400" :width="600" @animCreated="handleAnimation" />
-    </figure>
+      <button class="main-banner__btn" @click="goToEvents">
+        Explore os eventos
+      </button>
+    </div>
   </section>
 </template>
 
@@ -41,6 +44,9 @@ export default {
     onSpeedChange() {
       this.anim.setSpeed(this.animationSpeed);
     },
+    goToEvents() {
+      this.$router.push({ name: 'Events' });
+    },
   },
 };
 </script>
@@ -63,6 +69,38 @@ export default {
     #{ $self }__description {
       @apply w-3/4 text-justify;
       color: $dark_blue;
+    }
+  }
+  &__figure {
+    position: sticky;
+    #{ $self }__btn {
+      --border-width: 4px;
+      position: relative;
+      font-size: 3em;
+      text-align: center;
+      color: #fcedd8;
+      background: $baby-blue;
+      padding: 0.5rem 3rem 0.75rem 2rem;
+      border-radius: 7px;
+      font-weight: 700;
+      margin-top: -2.5rem;
+      text-shadow: 3px 3px 0px #46b59b, 6px 6px 0px #017e7f;
+      &:hover {
+        &::after {
+          position: absolute;
+          content: "";
+          top: calc(-1 * var(--border-width));
+          left: calc(-1 * var(--border-width));
+          z-index: -1;
+          width: calc(100% + var(--border-width) * 2);
+          height: calc(100% + var(--border-width) * 2);
+          background: linear-gradient(60deg, #fcedd8,#ffb743, $baby-blue, $mid-blue, $dark-blue);
+          background-size: 300% 300%;
+          background-position: 0 50%;
+          border-radius: calc(2 * var(--border-width));
+          animation: moveGradient 4s alternate infinite;
+        }
+      }
     }
   }
 }

@@ -140,7 +140,7 @@ export default {
 
 <style scoped lang="scss">
 .main-header {
-  @apply relative flex gap-4 items-center justify-between w-screen bg-white;
+  @apply relative flex gap-4 items-center justify-between bg-white;
   padding: 1.5rem 1.2rem 1.5rem;
   flex-shrink: 0;
   box-shadow: rgba(128, 128, 133, 0.2) 0px 7px 29px 0px;
