@@ -2,11 +2,11 @@
   <section class="featured-events">
     <h2 class="featured-events__title">Principais eventos</h2>
     <div class="featured-events__card-container">
-      <div
+      <BaseCard
         v-for="(card, index) in featuredCards"
         :key="index"
-        :class="['featured-events__card', { 'featured-events__card--loading': isLoading }]"
-      ></div>
+        :isLoading='isLoading'
+      ></BaseCard>
       <div class="featured-events__limit">
 
       </div>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import BaseCard from '@/components/BaseCard.vue';
 import ArrowAnimation from '@/assets/animations/lf20_faorml1q.json';
 import Lottie from '@/components/Lottie.vue';
 import { FEATURED_EVENTS_REQUEST } from '@/store/events/actions';
@@ -27,6 +28,7 @@ export default {
   name: 'FeaturedEvents',
   components: {
     Lottie,
+    BaseCard,
   },
   data() {
     return {
@@ -84,12 +86,6 @@ export default {
     #{ $self }__limit {
       @apply absolute h-24 w-full bottom-0;
       background: linear-gradient(to top, #FAFAFA 0%, rgba(255, 255, 255, 0) 100%);
-    }
-    #{ $self }__card {
-      @apply bg-gray-300 rounded-sm h-48;
-      &--loading {
-        animation: pulse 2s infinite ease-in-out;
-      }
     }
   }
   &__btn {

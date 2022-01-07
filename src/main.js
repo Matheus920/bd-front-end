@@ -7,7 +7,7 @@ import './assets/tailwind.css';
 
 Vue.use(GAuth, {
   clientId: process.env.VUE_APP_CLIENT_ID,
-  scope: 'email',
+  scope: 'profile',
   prompt: 'select_account',
   fetch_basic_profile: false,
 });
