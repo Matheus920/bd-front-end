@@ -1,17 +1,14 @@
 <template>
-  <footer class="footer">
-
-  </footer>
+  <footer class="footer"></footer>
 </template>
 
 <script>
-export default {
-
-};
+export default {};
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 .footer {
+  flex-shrink: 0;
   height: 300px;
   background-color: $dark-blue;
 }

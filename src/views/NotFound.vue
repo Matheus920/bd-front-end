@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div class="not-found">
+    Não foi encontrada a página solicitada
+  </div>
 </template>
 
 <script>

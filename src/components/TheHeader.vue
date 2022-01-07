@@ -3,7 +3,7 @@
 <template>
   <header class="main-header">
     <div class="flex w-2/3 gap-4 items-center">
-      <div class="logo font-bold">
+      <div class="logo font-bold" @click="goToHome">
         <span class="first-part">Get</span>
         <span class="second-part">here</span>
       </div>
@@ -26,11 +26,13 @@
           type="text"
           aria-label="Pesquisar evento"
           placeholder="Pesquisar evento"
+          @input="emitSearch"
+          @blur="emitNull"
         />
       </form>
     </div>
     <div class="user-actions w-30 flex w-1/5 gap-1.5">
-      <button class="btn sign-in"  @click="handleClickSignIn">
+      <button class="btn sign-in" @click="handleClickSignIn">
         Sign-in
       </button>
       <button class="btn login" @click="handleClickLogin">
@@ -49,7 +51,21 @@ export default {
       isSignIn: false,
     };
   },
+  props: {
+    value: {
+      required: true,
+    },
+  },
   methods: {
+    goToHome() {
+      this.$router.push({ name: 'Home' });
+    },
+    emitSearch(search) {
+      this.$emit('input', search.target.value);
+    },
+    emitNull() {
+      this.$emit('input', null);
+    },
     async handleClickLogin() {
       this.$gAuth
         .getAuthCode()
@@ -124,11 +140,14 @@ export default {
 
 <style scoped lang="scss">
 .main-header {
-  @apply flex gap-4 items-center justify-between w-screen bg-white;
+  @apply relative flex gap-4 items-center justify-between w-screen bg-white;
   padding: 1.5rem 1.2rem 1.5rem;
+  flex-shrink: 0;
   box-shadow: rgba(128, 128, 133, 0.2) 0px 7px 29px 0px;
+  z-index: 10;
   .logo {
     font-size: 2em;
+    cursor: pointer;
     .firs-part {
       color: $dark_blue;
     }

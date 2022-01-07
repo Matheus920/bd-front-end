@@ -11,7 +11,12 @@
 
       </div>
     </div>
-    <button class="featured-events__btn" @mouseover="playAnimation" @mouseleave="pauseAnimation">
+    <button
+      class="featured-events__btn"
+      @click='goToEvents'
+      @mouseover="playAnimation"
+      @mouseleave="pauseAnimation"
+    >
       Descubra mais eventos
       <Lottie :options="defaultOptions" :height="40" :width="50" @animCreated="handleAnimation" />
     </button>
@@ -65,6 +70,9 @@ export default {
         // show tooltip
           console.log(err);
         });
+    },
+    goToEvents() {
+      this.$router.push({ name: 'Events' });
     },
   },
   created() {

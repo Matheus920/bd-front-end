@@ -9,7 +9,7 @@ Vue.use(GAuth, {
   clientId: process.env.VUE_APP_CLIENT_ID,
   scope: 'profile',
   prompt: 'select_account',
-  fetch_basic_profile: false,
+  fetch_basic_profile: true,
 });
 
 Vue.config.productionTip = false;

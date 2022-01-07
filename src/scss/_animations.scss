@@ -1,13 +1,22 @@
 @keyframes pulse {
   0% {
-      background-color: #94A3B8;
+    background-color: #94a3b8;
   }
 
   50% {
-      background-color: #CBD5E1;
+    background-color: #cbd5e1;
   }
 
   100% {
-      background-color: #94A3B8;
+    background-color: #94a3b8;
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
