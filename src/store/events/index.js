@@ -70,12 +70,12 @@ const mutations = {
   },
 };
 const actions = {
-  [FEATURED_EVENTS_REQUEST]: ({ commit }, limit) => new Promise((resolve, reject) => {
+  [FEATURED_EVENTS_REQUEST]: ({ commit }, params) => new Promise((resolve, reject) => {
     commit(FEATURED_EVENTS_REQUEST);
 
     http({
       method: 'get',
-      url: `/events/available?page=1&pagesize=${limit}`,
+      url: `/events/available?page=${params.page}&pagesize=${params.size}`,
     })
       .then(({ data }) => {
         commit(FEATURED_EVENTS_SUCCESS);

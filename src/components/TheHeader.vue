@@ -33,10 +33,10 @@
     </div>
     <div
       v-if='isAuthenticated'
-      class="user-actions w-30 flex w-1/5 gap-0.25"
+      class="user-actions profile-actions w-30 flex w-1/5 gap-0.25"
     >
       <button
-        class="btn profile"
+        class="btn  profile"
         @click="goToUser"
       > Perfil </button>
       <button
@@ -193,9 +193,16 @@ export default {
         background: linear-gradient(160deg, $baby_blue 25%, $mid_blue 80%, $dark_blue 100%);
       }
       &.profile {
-        font-weight: regular;
+        width: 25%;
+      }
+      &.sign-out {
+        width: 25%;
+        font-weight: normal;
       }
       padding: 0.3rem;
+    }
+    &.profile-actions {
+      justify-content: flex-end;
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="loader"></div>
+  <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
 </template>
 
 <script>
@@ -9,44 +9,39 @@ export default {
 </script>
 
 <style lang='scss'>
-.loader,
-.loader:before,
-.loader:after {
-  border-radius: 50%;
-}
-.loader {
-  color: #ffffff;
-  font-size: 11px;
-  text-indent: -99999em;
-  margin: 55px auto;
+.lds-ring {
+  display: inline-block;
   position: relative;
-  width: 10em;
-  height: 10em;
-  box-shadow: inset 0 0 0 1em;
-  transform: translateZ(0);
-  &:before, &:after {
-    position: absolute;
-    content: '';
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid $dark-blue ;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: $dark-blue transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
   }
-  &:before {
-    width: 5.2em;
-    height: 10.2em;
-    background: $dark-blue;
-    border-radius: 10.2em 0 0 10.2em;
-    top: -0.1em;
-    left: -0.1em;
-    transform-origin: 5.1em 5.1em;
-    animation: loader 2s infinite ease 1.5s;
-  }
-  &:after {
-    width: 5.2em;
-    height: 10.2em;
-    background: $dark-blue;
-    border-radius: 0 10.2em 10.2em 0;
-    top: -0.1em;
-    left: 4.9em;
-    transform-origin: 0.1em 5.1em;
-    animation: loader 2s infinite ease;
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

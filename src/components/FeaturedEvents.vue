@@ -63,7 +63,7 @@ export default {
       this.anim.setSpeed(this.animationSpeed);
     },
     getFeaturedEvents() {
-      this.$store.dispatch(FEATURED_EVENTS_REQUEST, 9)
+      this.$store.dispatch(FEATURED_EVENTS_REQUEST, { page: 1, size: 9 })
         .then((data) => {
           if (data) this.featuredCards = data.events;
           console.log(data);
