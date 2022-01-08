@@ -1,9 +1,11 @@
 <template>
     <div class="user">
-    <div class="user__content">
-        <UserInfo class="user__sidebar"/>
-    </div>
-        <TheFooter />
+      <div class="user__content">
+          <UserInfo class="user__sidebar" @viewChanged="setCurrentView"/>
+      </div>
+          {{currentView}}
+          <router-view :name=currentView></router-view>
+          <TheFooter />
     </div>
 </template>
 
@@ -12,9 +14,19 @@ import TheFooter from '../components/TheFooter.vue';
 import UserInfo from '@/components/UserInfo.vue';
 
 export default {
+  data() {
+    return {
+      currentView: 'EditProfile',
+    };
+  },
   components: {
     TheFooter,
     UserInfo,
+  },
+  methods: {
+    setCurrentView(viewName) {
+      this.currentView = viewName;
+    },
   },
 };
 </script>

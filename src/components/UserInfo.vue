@@ -1,21 +1,41 @@
 <template>
-    <div class="user_info">
-      <div class="user_info__header">
-        <div class="user_info__header_info">
-            <img :src=userProfilePic class="user_info__rounded_image">
-            <span class="user_info__centered_span">{{userName}}</span>
-        </div>
-        <div class="user_info__header_separator">
-            <hr>
-        </div>
+  <div class="user_info">
+    <div class="user_info__header">
+      <div class="user_info__header_info">
+        <img :src="userProfilePic" class="user_info__rounded_image" />
+        <span class="user_info__centered_span">{{ userName }}</span>
       </div>
-      <div class="user_info__list">
-            <Button icon="account-circle" text="Editar Perfil"/>
-            <Button icon="ticket" text="Visualizar Atividades"/>
-            <Button icon="calendar-edit" text="Criar Evento"/>
-            <Button icon="certificate" text="Listar Certificados"/>
+      <div class="user_info__header_separator">
+        <hr />
       </div>
     </div>
+    <div class="user_info__list">
+      <Button
+        icon="account-circle"
+        text="Editar Perfil"
+        viewName="EditProfile"
+        @optionSelected="changeView"
+      />
+      <Button
+        icon="ticket"
+        text="Visualizar Atividades"
+        viewName="Activities"
+        @optionSelected="changeView"
+      />
+      <Button
+        icon="calendar-edit"
+        text="Criar Evento"
+        viewName="Event"
+        @optionSelected="changeView"
+      />
+      <Button
+        icon="certificate"
+        text="Listar Certificados"
+        viewName="Certificates"
+        @optionSelected="changeView"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -34,47 +54,52 @@ export default {
       return this.$store.getters.userData.data.imagem_perfil;
     },
   },
+  methods: {
+    changeView(viewName) {
+      this.$emit('viewChanged', viewName);
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-    .user_info {
-        $self: &;
-        display: flex;
-        flex-flow: wrap;
-        width: 20%;
-       // height: 100vh;
-        background-color: #fff;
-        &__header {
-            width: 100%;
-            height: 20vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-flow: wrap;
-        }
-        &__header_info {
-            display: flex;
-            flex-flow: nowrap;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-        &__header_separator {
-            margin-top: 3px;
-            width: 80%;
-        }
-        &__rounded_image {
-            border-radius: 50%;
-        }
-        &__centered_span {
-            width: 100%;
-        }
-        &__list {
-            display: flex;
-            flex-flow: wrap;
-            width: 100%;
-            margin-left: 10%;
-        }
-    }
+.user_info {
+  $self: &;
+  display: flex;
+  flex-flow: wrap;
+  width: 20%;
+  // height: 100vh;
+  background-color: #fff;
+  &__header {
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: wrap;
+  }
+  &__header_info {
+    display: flex;
+    flex-flow: nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  &__header_separator {
+    margin-top: 3px;
+    width: 80%;
+  }
+  &__rounded_image {
+    border-radius: 50%;
+  }
+  &__centered_span {
+    width: 100%;
+  }
+  &__list {
+    display: flex;
+    flex-flow: wrap;
+    width: 100%;
+    margin-left: 10%;
+  }
+}
 </style>
