@@ -1,12 +1,18 @@
 <template>
-    <div class="user_info">{{userInfo.name}}</div>
+    <div class="user_info">
+        <img :src=userProfilePic class="user_info__rounded_image">
+        <span class="user_info__centered_span">{{userName}}</span>
+    </div>
 </template>
 
 <script>
 export default {
   computed: {
-    userInfo() {
-      return this.$store.getters.userData;
+    userName() {
+      return this.$store.getters.userData.data.nome_usuario;
+    },
+    userProfilePic() {
+      return this.$store.getters.userData.data.imagem_perfil;
     },
   },
 };
@@ -14,10 +20,19 @@ export default {
 
 <style lang="scss">
     .user_info {
+        $self: &;
         display: flex;
         width: 20%;
         justify-items: start;
-        padding-left: 5%;
         background-color: #fff;
+        &__rounded_image {
+            border-radius: 50%;
+        }
+        &__centered_span {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 </style>
