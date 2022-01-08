@@ -1,6 +1,16 @@
 <template>
-    <div class="user_info">Teste</div>
+    <div class="user_info">{{userInfo.name}}</div>
 </template>
+
+<script>
+export default {
+  computed: {
+    userInfo() {
+      return this.$store.getters.userData;
+    },
+  },
+};
+</script>
 
 <style lang="scss">
     .user_info {
