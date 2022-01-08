@@ -48,9 +48,9 @@ export default class SingletonHttp {
       SingletonHttp.instance = new Http();
 
       if (sessionStorage.getItem('token')) {
-        SingletonHttp.instance.http.defaults.headers.common.Authorization = `Bearer ${sessionStorage.getItem(
+        SingletonHttp.instance.http.defaults.headers.common.gAuth = sessionStorage.getItem(
           'token',
-        )}`;
+        );
       }
     }
 
