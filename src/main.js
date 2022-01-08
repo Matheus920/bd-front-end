@@ -4,6 +4,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import './assets/tailwind.css';
+import '@mdi/font/css/materialdesignicons.css';
 
 Vue.use(GAuth, {
   clientId: process.env.VUE_APP_CLIENT_ID,

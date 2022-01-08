@@ -9,11 +9,23 @@
             <hr>
         </div>
       </div>
+      <div class="user_info__list">
+            <Button icon="account-circle" text="Editar Perfil"/>
+            <Button icon="ticket" text="Visualizar Atividades"/>
+            <Button icon="calendar-edit" text="Criar Evento"/>
+            <Button icon="certificate" text="Listar Certificados"/>
+      </div>
     </div>
 </template>
 
 <script>
+import Button from '@/components/Button.vue';
+
 export default {
+  name: 'UserInfo',
+  components: {
+    Button,
+  },
   computed: {
     userName() {
       return this.$store.getters.userData.data.nome_usuario;
@@ -29,9 +41,9 @@ export default {
     .user_info {
         $self: &;
         display: flex;
+        flex-flow: wrap;
         width: 20%;
-        height: 100vh;
-        justify-items: start;
+       // height: 100vh;
         background-color: #fff;
         &__header {
             width: 100%;
@@ -57,6 +69,12 @@ export default {
         }
         &__centered_span {
             width: 100%;
+        }
+        &__list {
+            display: flex;
+            flex-flow: wrap;
+            width: 100%;
+            margin-left: 10%;
         }
     }
 </style>
