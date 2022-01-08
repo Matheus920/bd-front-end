@@ -11,7 +11,7 @@
         />
       </div>
       <BasePagination
-        v-if="cards.length != 0"
+        v-if="cards.length != 0 && !isSearch"
         :current="params.page"
         :total="totalPages"
         :per-page="params.size"
@@ -25,7 +25,7 @@
 import BaseCard from '@/components/BaseCard.vue';
 import BaseLoader from '@/components/BaseLoader.vue';
 import BasePagination from '@/components/BasePagination.vue';
-import { FEATURED_EVENTS_REQUEST } from '@/store/events/actions';
+import { FEATURED_EVENTS_REQUEST, SEARCH_EVENTS_REQUEST } from '@/store/events/actions';
 
 export default {
   name: 'EventsList',
@@ -34,6 +34,12 @@ export default {
     BaseLoader,
     BasePagination,
   },
+  props: {
+    search: {
+      default: '',
+      Type: String,
+    },
+  },
   computed: {
     isLoading() {
       return this.$store.getters.featuredEventsStatus === 'loading';
@@ -41,12 +47,13 @@ export default {
   },
   data() {
     return {
-      cards: [{}, {}, {}, {}, {}],
+      cards: [],
       params: {
         page: 1,
         size: 12,
       },
       totalPages: 0,
+      isSearch: false,
     };
   },
   methods: {
@@ -64,6 +71,46 @@ export default {
     changePage(page) {
       this.params.page = page;
       this.getEvents();
+    },
+    resetsParams() {
+      this.params = {
+        page: 1,
+        size: 12,
+      };
+    },
+    searchEvents(search) {
+      this.$store
+        .dispatch(SEARCH_EVENTS_REQUEST, search)
+        .then((data) => {
+          if (data) this.cards = data;
+        })
+        .catch((err) => {
+          // show tooltip
+          console.log(err);
+        });
+    },
+    debounceSearch(search) {
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(() => {
+        if (search === '') {
+          this.isSearch = false;
+          this.resetsParams();
+          this.$nextTick(() => {
+            this.getEvents();
+          });
+          return;
+        }
+        this.isSearch = true;
+        this.searchEvents(search);
+      }, 600);
+    },
+  },
+  watch: {
+    search: {
+      handler() {
+        console.log(this.search);
+        this.debounceSearch(this.search);
+      },
     },
   },
   created() {
@@ -85,7 +132,7 @@ export default {
     #{ $self }__cards {
       @apply relative grid grid-cols-3 gap-7 p-10 mt-4 mb-8 overflow-hidden;
       #{ $self }__card {
-        // max-width: 30%;
+        min-width: 35%;
       }
     }
   }
