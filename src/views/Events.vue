@@ -2,7 +2,7 @@
   <div class="events">
     <TheHeader v-model='searchEvent'/>
     <div class="events__content">
-      <EventsList />
+      <EventsList :search="searchEvent" />
     </div>
     <TheFooter />
   </div>
