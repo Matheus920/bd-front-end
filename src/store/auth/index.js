@@ -48,8 +48,10 @@ const actions = {
 
     http({
       method: 'post',
-      url: '/login',
-      data: payload,
+      url: '/session',
+      headers: {
+        gtoken: payload.id_token,
+      },
     })
       .then(({ data }) => {
         http.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`;

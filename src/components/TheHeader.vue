@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { AUTH_LOGIN_REQUEST } from '@/store/auth/actions';
+
 export default {
   name: 'Header',
   data() {
@@ -72,23 +74,19 @@ export default {
         .then(async (authCode) => {
           // on success
           // eslint-disable-next-line no-unused-vars
-          let data = '';
-          data += `${process.env.VUE_APP_CLIENT_ID}&`;
-          data += `${process.env.VUE_APP_CLIENT_SECRET}&`;
-          data += 'redirect_uri=postmessage&';
-          data += 'grant_type=authorization_code';
-          data += `code=${authCode}&`;
-
-          // Victor server-side
-          // const response = await fetch('https://www.googleapis.com/oauth2/v4/token', {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/x-www-form-urlencoded',
-          //   },
-          //   body: data,
-          // });
-          console.log('authCode', authCode);
-          // console.log('response', response);
+          console.log(authCode);
+          console.log(
+            'getAuthResponse',
+            this.$gAuth.GoogleAuth.currentUser.get().getAuthResponse(),
+          );
+          this.$store
+            .dispatch(
+              AUTH_LOGIN_REQUEST,
+              this.$gAuth.GoogleAuth.currentUser.get().getAuthResponse(),
+            )
+            .then((resp) => {
+              console.log(resp);
+            });
         })
         .catch((error) => {
           console.log(error);

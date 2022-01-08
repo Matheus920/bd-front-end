@@ -7,7 +7,7 @@ import './assets/tailwind.css';
 
 Vue.use(GAuth, {
   clientId: process.env.VUE_APP_CLIENT_ID,
-  scope: 'profile',
+  scope: 'profile https://www.googleapis.com/auth/user.birthday.read',
   prompt: 'select_account',
   fetch_basic_profile: true,
 });
