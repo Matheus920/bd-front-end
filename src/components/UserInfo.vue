@@ -1,7 +1,9 @@
 <template>
     <div class="user_info">
+      <div>
         <img :src=userProfilePic class="user_info__rounded_image">
         <span class="user_info__centered_span">{{userName}}</span>
+      </div>
     </div>
 </template>
 
@@ -23,6 +25,7 @@ export default {
         $self: &;
         display: flex;
         width: 20%;
+        height: 100vh;
         justify-items: start;
         background-color: #fff;
         &__rounded_image {

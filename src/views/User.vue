@@ -1,6 +1,8 @@
 <template>
     <div class="user">
-        <UserInfo />
+    <div class="user__content">
+        <UserInfo class="user__sidebar"/>
+    </div>
         <TheFooter />
     </div>
 </template>
@@ -16,3 +18,17 @@ export default {
   },
 };
 </script>
+
+<style lang='scss'>
+.user {
+  $self: &;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  &__content {
+    flex: 1 0 auto;
+    #{ $self }__sidebar {
+    }
+  }
+}
+</style>

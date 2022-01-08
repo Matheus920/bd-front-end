@@ -31,10 +31,19 @@
         />
       </form>
     </div>
-    <template v-if='isAuthenticated'>
-      <!-- {{userData}} -->
-      <button @click="handleClickSignOut"> Sair </button>
-    </template>
+    <div
+      v-if='isAuthenticated'
+      class="user-actions w-30 flex w-1/5 gap-0.25"
+    >
+      <button
+        class="btn profile"
+        @click="goToUser"
+      > Perfil </button>
+      <button
+        class="btn sign-out"
+        @click="handleClickSignOut"
+      > Sair </button>
+    </div>
     <div v-else class="user-actions w-30 flex w-1/5 gap-1.5">
       <button class="btn sign-in" @click="handleClickSignIn">
         Sign-in
@@ -84,14 +93,7 @@ export default {
     async handleClickLogin() {
       this.$gAuth
         .getAuthCode()
-        .then(async (authCode) => {
-          // on success
-          // eslint-disable-next-line no-unused-vars
-          console.log(authCode);
-          console.log(
-            'getAuthResponse',
-            this.$gAuth.GoogleAuth.currentUser.get().getAuthResponse(),
-          );
+        .then(async () => {
           this.$store
             .dispatch(
               AUTH_LOGIN_REQUEST,
@@ -124,18 +126,19 @@ export default {
           console.log(error);
         });
     },
-
     handleClickSignOut() {
       this.$gAuth
         .signOut()
         .then(() => {
-          // on success do something
           this.isSignIn = this.$gAuth.isAuthorized;
           this.$store.dispatch(AUTH_LOGOUT);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    goToUser() {
+      this.$router.push({ name: 'User' });
     },
 
   },
@@ -188,6 +191,9 @@ export default {
       &.login {
         @apply text-white rounded;
         background: linear-gradient(160deg, $baby_blue 25%, $mid_blue 80%, $dark_blue 100%);
+      }
+      &.profile {
+        font-weight: regular;
       }
       padding: 0.3rem;
     }
