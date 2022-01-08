@@ -31,6 +31,9 @@
         />
       </form>
     </div>
+    <template v-i>
+
+    </template>
     <div class="user-actions w-30 flex w-1/5 gap-1.5">
       <button class="btn sign-in" @click="handleClickSignIn">
         Sign-in
@@ -56,6 +59,11 @@ export default {
   props: {
     value: {
       required: true,
+    },
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
     },
   },
   methods: {

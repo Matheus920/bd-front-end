@@ -21,6 +21,7 @@ const state = {
 };
 const getters = {
   isAuthenticated: (state) => state.token,
+  userData: (state) => state.userInfo,
 };
 const mutations = {
   [AUTH_LOGIN_REQUEST]: (state) => {
