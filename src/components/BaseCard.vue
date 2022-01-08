@@ -40,6 +40,7 @@ export default {
   },
   methods: {
     selectEvent() {
+      console.log(this.id);
       if (!this.isLoading) { this.$store.dispatch(SELECT_EVENT, this.id); }
     },
   },

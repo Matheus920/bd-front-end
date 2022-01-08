@@ -28,6 +28,7 @@
           :key="index"
           class="search-preview__card"
           :data="event"
+          :id='event.id_evento'
         />
       </div>
       <span class="search-preview__num-results"> Foram encontrados '{{ eventsNum }}' eventos</span>

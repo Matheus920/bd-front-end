@@ -60,7 +60,7 @@ const mutations = {
     state.searchEventsStatus = status;
   },
   [GET_EVENT_REQUEST]: (state) => {
-    state.searchEventsStatus = 'loading';
+    state.eventStatus = 'loading';
   },
   [GET_EVENT_SUCCESS]: (state) => {
     state.eventStatus = 'success';

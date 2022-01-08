@@ -7,6 +7,7 @@
           v-for="(card, index) in cards"
           :key="index"
           :data="card"
+          :id="card.id_evento"
           class="events-list__card"
         />
       </div>

@@ -4,6 +4,8 @@
     <div class="events__content">
       <EventsList :search="searchEvent" />
     </div>
+    <BaseCardModal />
+
     <TheFooter />
   </div>
 </template>
@@ -11,6 +13,7 @@
 <script>
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '../components/TheFooter.vue';
+import BaseCardModal from '@/components/BaseCardModal.vue';
 import EventsList from '../components/EventsList.vue';
 
 export default {
@@ -18,6 +21,7 @@ export default {
     TheHeader,
     TheFooter,
     EventsList,
+    BaseCardModal,
   },
   data() {
     return {

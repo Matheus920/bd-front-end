@@ -7,6 +7,7 @@
         :key="index"
         :isLoading='isLoading'
         :data='card'
+        :id='card.id_evento'
       ></BaseCard>
       <div class="featured-events__limit">
 

@@ -88,7 +88,9 @@ export default {
       this.$emit('input', search.target.value);
     },
     emitNull() {
-      this.$emit('input', false);
+      setTimeout(() => {
+        this.$emit('input', false);
+      }, 100);
     },
     async handleClickLogin() {
       this.$gAuth
