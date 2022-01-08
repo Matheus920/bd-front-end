@@ -31,10 +31,11 @@
         />
       </form>
     </div>
-    <template v-i>
-
+    <template v-if='isAuthenticated'>
+      <!-- {{userData}} -->
+      <button @click="handleClickSignOut"> Sair </button>
     </template>
-    <div class="user-actions w-30 flex w-1/5 gap-1.5">
+    <div v-else class="user-actions w-30 flex w-1/5 gap-1.5">
       <button class="btn sign-in" @click="handleClickSignIn">
         Sign-in
       </button>
@@ -46,7 +47,7 @@
 </template>
 
 <script>
-import { AUTH_LOGIN_REQUEST } from '@/store/auth/actions';
+import { AUTH_LOGIN_REQUEST, AUTH_LOGOUT } from '@/store/auth/actions';
 
 export default {
   name: 'Header',
@@ -64,6 +65,10 @@ export default {
   computed: {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
+    },
+    userData() {
+      console.log(this.$store.getters.userData);
+      return this.$store.getters.userData;
     },
   },
   methods: {
@@ -126,11 +131,13 @@ export default {
         .then(() => {
           // on success do something
           this.isSignIn = this.$gAuth.isAuthorized;
+          this.$store.dispatch(AUTH_LOGOUT);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
   },
   created() {
     // in app

@@ -27,7 +27,8 @@ const mutations = {
   [AUTH_LOGIN_REQUEST]: (state) => {
     state.loginStatus = 'loading';
   },
-  [AUTH_LOGIN_SUCCESS]: (state, accessToken, userInfo) => {
+  [AUTH_LOGIN_SUCCESS]: (state, { accessToken, userInfo }) => {
+    debugger;
     sessionStorage.setItem('token', accessToken);
     state.token = accessToken;
     state.loginStatus = 'success';
@@ -54,9 +55,10 @@ const actions = {
         gtoken: payload.id_token,
       },
     })
-      .then(({ data }) => {
+      .then((data) => {
+        debugger;
         http.defaults.headers.common.gAuth = payload.id_token;
-        commit(AUTH_LOGIN_SUCCESS, payload.id_token, data);
+        commit(AUTH_LOGIN_SUCCESS, { accessToken: payload.id_token, userInfo: data });
         resolve(data);
       })
       .catch((error) => {
