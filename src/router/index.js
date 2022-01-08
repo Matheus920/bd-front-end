@@ -3,11 +3,12 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Events from '../views/Events.vue';
 import NotFound from '../views/NotFound.vue';
+import User from '../views/User.vue';
 import store from '../store';
 
 // eslint-disable-next-line consistent-return
-const ifAuthenticated = (to, from, next) => {
-  if (store.getters.isAutheticated) {
+const isAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
     return next();
   }
   next('/');
@@ -29,8 +30,8 @@ const routes = [
   {
     path: '/user',
     name: 'User',
-    beforeEnter: ifAuthenticated,
-    component: NotFound,
+    beforeEnter: isAuthenticated,
+    component: User,
   },
   {
     path: '*',
