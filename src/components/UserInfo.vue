@@ -13,7 +13,7 @@
       <Button
         icon="account-circle"
         text="Editar Perfil"
-        viewName="EditProfile"
+        viewName="Profile"
         @optionSelected="changeView"
       />
       <Button
@@ -67,9 +67,9 @@ export default {
 .user_info {
   $self: &;
   display: flex;
-  flex-flow: wrap;
+  flex-direction: column;
   width: 20%;
-  // height: 100vh;
+  height: 100vh;
   background-color: #fff;
   &__header {
     width: 100%;

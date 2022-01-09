@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import Events from '../views/Events.vue';
 import NotFound from '../views/NotFound.vue';
 import User from '../views/User.vue';
+import Profile from '../views/Profile.vue';
 import store from '../store';
 
 // eslint-disable-next-line consistent-return
@@ -32,6 +33,14 @@ const routes = [
     name: 'User',
     beforeEnter: isAuthenticated,
     component: User,
+    children: [
+      {
+        path: '/profile',
+        name: 'Profile',
+        beforeEnter: isAuthenticated,
+        component: Profile,
+      },
+    ],
   },
   {
     path: '*',
