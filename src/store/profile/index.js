@@ -8,7 +8,12 @@ import {
   PROFILE_ACTIVITIES_REQUEST,
   PROFILE_ACTIVITIES_SUCCESS,
   PROFILE_ACTIVITIES_FAILED,
+  UPDATE_PROFILE,
 } from './actions';
+
+import {
+  SET_USER_DATA,
+} from '@/store/auth/actions';
 
 const { http } = api.getInstance();
 
@@ -43,6 +48,20 @@ const actions = {
       })
       .catch((error) => {
         commit(PROFILE_ACTIVITIES_FAILED);
+        reject(error);
+      });
+  }),
+  [UPDATE_PROFILE]: ({ commit, getters }, payload) => new Promise((resolve, reject) => {
+    http({
+      method: 'put',
+      url: `/user/${getters.userData.id_usuario}`,
+      data: payload,
+    })
+      .then(({ data }) => {
+        commit(SET_USER_DATA, data);
+        resolve(data);
+      })
+      .catch((error) => {
         reject(error);
       });
   }),

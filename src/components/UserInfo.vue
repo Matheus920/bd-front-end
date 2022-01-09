@@ -48,7 +48,6 @@ export default {
   },
   computed: {
     userName() {
-      console.log(this.$store.getters.userData);
       return this.$store.getters.userData?.nome_usuario;
     },
     userProfilePic() {

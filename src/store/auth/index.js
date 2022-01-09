@@ -9,6 +9,7 @@ import {
   AUTH_LOGIN_SUCCESS,
   AUTH_LOGIN_FAILED,
   AUTH_LOGOUT,
+  SET_USER_DATA,
 } from './actions';
 
 const { http } = api.getInstance();
@@ -41,6 +42,9 @@ const mutations = {
     state.token = null;
     state.loginStatus = '';
     state.userRole = '';
+  },
+  [SET_USER_DATA]: (state, userData) => {
+    state.userInfo = userData;
   },
 };
 const actions = {
@@ -75,6 +79,9 @@ const actions = {
       reject(e);
     }
   }),
+  [SET_USER_DATA]: ({ commit }, userData) => {
+    commit(SET_USER_DATA, userData);
+  },
 };
 
 export default {

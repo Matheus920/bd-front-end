@@ -5,6 +5,7 @@ import VueToast from 'vue-toast-notification';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import './scss/index.scss';
 import './assets/tailwind.css';
 import '@mdi/font/css/materialdesignicons.css';
 import 'vue-toast-notification/dist/theme-sugar.css';

@@ -22,14 +22,14 @@
             w-full
             bg-gray-200
             text-gray-700
-            border border-red-500
+            border border-gray-200
             rounded
             py-3
             px-4
-            mb-3
             leading-tight
-            focus:outline-none focus:bg-white
+            focus:outline-none focus:bg-white focus:border-gray-500
           "
+          v-model='tempData.nome_usuario'
           id="grid-first-name"
           type="text"
           placeholder="Jane"
@@ -64,6 +64,7 @@
             leading-tight
             focus:outline-none focus:bg-white focus:border-gray-500
           "
+          v-model='tempData.cpf'
           id="grid-last-name"
           type="text"
           placeholder="Doe"
@@ -132,6 +133,7 @@
             leading-tight
             focus:outline-none focus:bg-white focus:border-gray-500
           "
+          v-model="tempData.data_nascimento"
           id="grid-state"
           type="date"
           placeholder="90210"
@@ -153,6 +155,7 @@
                 hover:border-transparent
                 rounded
                 "
+                @click="saveProfile"
             >
                 Salvar
             </button>
@@ -160,6 +163,46 @@
     </div>
   </div>
 </template>
+
+<script>
+
+import { UPDATE_PROFILE } from '@/store/profile/actions';
+
+export default {
+  name: 'Profile',
+  computed: {
+    userData() {
+      return this.$store.getters.userData;
+    },
+  },
+  data() {
+    return {
+      tempData: null,
+    };
+  },
+  methods: {
+    saveProfile() {
+      if (!this.tempData.cpf) {
+        this.$toast.error('Por favor preencha o cpf');
+        return;
+      }
+      if (!this.tempData.nome_usuario) {
+        this.$toast.error('Por favor preencha o nome do usuario');
+        return;
+      }
+      this.$store.dispatch(UPDATE_PROFILE, this.tempData)
+        .then(() => {
+          this.$toast.success('Dados atualizados com sucesso');
+        });
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.tempData = JSON.parse(JSON.stringify(this.userData));
+    });
+  },
+};
+</script>
 
 <style lang="scss">
 .profile-form {
