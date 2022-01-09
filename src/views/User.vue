@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import TheFooter from '../components/TheFooter.vue';
 import UserInfo from '@/components/UserInfo.vue';
+import TheFooter from '../components/TheFooter.vue';
 
 export default {
   components: {
