@@ -103,6 +103,8 @@ export default {
             )
             .then((resp) => {
               console.log(resp);
+            }).catch(() => {
+              this.$toast.error('Por favor, registre-se antes');
             });
         })
         .catch((error) => {
@@ -128,16 +130,20 @@ export default {
           console.log(error);
         });
     },
+    // handleClickSignOut() {
+    //   this.$gAuth
+    //     .signOut()
+    //     .then(() => {
+    //       this.isSignIn = this.$gAuth.isAuthorized;
+    //       this.$store.dispatch(AUTH_LOGOUT);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
     handleClickSignOut() {
-      this.$gAuth
-        .signOut()
-        .then(() => {
-          this.isSignIn = this.$gAuth.isAuthorized;
-          this.$store.dispatch(AUTH_LOGOUT);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.$store.dispatch(AUTH_LOGOUT);
+      // this.$router.push({ name: 'Home' });
     },
     goToUser() {
       this.$router.push({ name: 'User' });

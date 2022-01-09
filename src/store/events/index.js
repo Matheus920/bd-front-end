@@ -15,6 +15,7 @@ import {
   GET_EVENT_SUCCESS,
   GET_EVENT_FAILED,
   SET_SEARCH_STATUS,
+  JOIN_EVENT,
   SELECT_EVENT,
 } from './actions';
 
@@ -107,12 +108,25 @@ const actions = {
   [SET_SEARCH_STATUS]: ({ commit }, status) => {
     commit(SET_SEARCH_STATUS, status);
   },
-  [GET_EVENT_REQUEST]: ({ commit }, eventId) => new Promise((resolve, reject) => {
-    commit(GET_EVENT_REQUEST);
-
+  [JOIN_EVENT]: (commit, activityId) => new Promise((resolve, reject) => {
     http({
       method: 'get',
-      url: `/events/${eventId}`,
+      url: `/activities/subscribe/${activityId}`,
+    })
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [GET_EVENT_REQUEST]: ({ commit, getters }, eventId) => new Promise((resolve, reject) => {
+    commit(GET_EVENT_REQUEST);
+    const url = getters.isAuthenticated ? `/events/${eventId}?email=${getters.userData.email}` : `/events/${eventId}`;
+    debugger;
+    http({
+      method: 'get',
+      url,
     })
       .then(({ data }) => {
         commit(GET_EVENT_SUCCESS);

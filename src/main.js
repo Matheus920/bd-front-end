@@ -1,10 +1,25 @@
 import Vue from 'vue';
 import GAuth from 'vue-google-oauth2';
+import VueLuxon from 'vue-luxon';
+import VueToast from 'vue-toast-notification';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import './assets/tailwind.css';
 import '@mdi/font/css/materialdesignicons.css';
+import 'vue-toast-notification/dist/theme-sugar.css';
+
+Vue.use(VueLuxon, {
+  input: {
+    zone: 'utc',
+    format: 'iso',
+  },
+  output: 'short',
+});
+
+Vue.use(VueToast, {
+  position: 'top-right',
+});
 
 Vue.use(GAuth, {
   clientId: process.env.VUE_APP_CLIENT_ID,

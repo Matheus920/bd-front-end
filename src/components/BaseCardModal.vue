@@ -1,36 +1,43 @@
 <template>
-  <div
-    :class="['modal', { 'modal--active': showModal }]"
-  >
+  <div :class="['modal', { 'modal--active': showModal }]">
     <label class="modal__bg"></label>
     <div class="modal__inner">
-      <BaseLoader v-if="isLoading" class="modal__loader"/>
+      <BaseLoader v-if="isLoading" class="modal__loader" />
       <template v-else>
-        <label class="modal__close" @click='closeModal'></label>
-        <h2 class="modal__header">{{data.nome_evento}}</h2>
-        <span><span class="font-bold">Capacidade:</span> {{data.capacidade_evento}}</span>
-        <span><span class="font-bold">Site:</span> {{data.site_evento}}</span>
+        <label class="modal__close" @click="closeModal"></label>
+        <h2 class="modal__header">{{ data.nome_evento }}</h2>
+        <span><span class="font-bold">Capacidade:</span> {{ data.capacidade_evento }}</span>
+        <span><span class="font-bold">Site:</span> {{ data.site_evento }}</span>
         <p>
           <span class="font-bold">Descrição:</span>
-          {{data.descricao_evento}}
+          {{ data.descricao_evento }}
         </p>
         <div class="modal__activities">
-          <h3> Atividades: </h3>
-          <div
-            v-for="(activity, index) in data.atividades"
-            :key="index"
-            class="modal__activity"
-          >
-            <div>
-              <span> {{activity.nome_atividade}}</span>
-              <p>{{activity.descricao_atividade}}</p>
+          <h3>Atividades:</h3>
+          <div v-for="(activity, index) in data.atividades" :key="index" class="modal__activity">
+            <div class="max-w-1/2">
+              <span class="font-bold"> {{ activity.nome_atividade }}</span>
+              <p class="mt-1">{{ activity.descricao_atividade }}</p>
             </div>
             <div>
-              <button class="btn modal__activity-join"> Se inscrever </button>
+              <button
+                v-if="isAuthenticated"
+                class="btn modal__activity-join"
+                @click="joinActivity(activity.id_atividade)"
+              > Se inscrever </button>
+              <span v-else>
+                Faça login para inscrever-se
+              </span>
             </div>
-            <div class="flex flex-col w-full">
-              <span> Data de inicio: </span>
-              <span> Data de fim: </span>
+            <div class="flex flex-col w-full mt-1">
+              <span>
+                <span class="font-bold">Data de inicio:</span>
+                  {{ activity.data_inicial | luxon }}
+                </span>
+              <span>
+                <span class="font-bold">Data de fim:</span>
+                  {{ activity.data_final | luxon }}
+                </span>
             </div>
           </div>
         </div>
@@ -40,7 +47,7 @@
 </template>
 
 <script>
-import { SELECT_EVENT, GET_EVENT_REQUEST } from '@/store/events/actions';
+import { SELECT_EVENT, GET_EVENT_REQUEST, JOIN_EVENT } from '@/store/events/actions';
 import BaseLoader from '@/components/BaseLoader.vue';
 
 export default {
@@ -54,6 +61,9 @@ export default {
     };
   },
   computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    },
     showModal() {
       return this.$store.getters.isSelectedEvent;
     },
@@ -69,7 +79,8 @@ export default {
       this.$store.dispatch(SELECT_EVENT, null);
     },
     getEventDetails() {
-      this.$store.dispatch(GET_EVENT_REQUEST, this.eventId)
+      this.$store
+        .dispatch(GET_EVENT_REQUEST, this.eventId)
         .then((data) => {
           this.data = data;
           console.log(data);
@@ -78,12 +89,20 @@ export default {
           console.log(err);
         });
     },
+    joinActivity(activityId) {
+      this.$store.dispatch(JOIN_EVENT, activityId)
+        .finally(() => {
+          this.getEventDetails();
+        });
+    },
   },
   watch: {
     showModal: {
       immediate: true,
       handler() {
-        if (this.showModal) { this.getEventDetails(); }
+        if (this.showModal) {
+          this.getEventDetails();
+        }
       },
     },
   },
@@ -135,7 +154,7 @@ export default {
     overflow: auto;
     background: #fff;
     border-radius: 5px;
-    padding: 2em 3em;
+    padding: 3em;
     height: 80%;
     color: rgb(128, 128, 128);
     #{ $self }__header {
@@ -190,7 +209,8 @@ export default {
       width: 1.1em;
       height: 1.1em;
       cursor: pointer;
-      &:after, &:before {
+      &:after,
+      &:before {
         content: "";
         position: absolute;
         width: 2px;

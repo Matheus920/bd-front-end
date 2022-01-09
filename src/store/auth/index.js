@@ -20,7 +20,7 @@ const state = {
   userInfo: null,
 };
 const getters = {
-  isAuthenticated: (state) => state.token,
+  isAuthenticated: (state) => state.token != null,
   userData: (state) => state.userInfo,
 };
 const mutations = {
@@ -54,7 +54,7 @@ const actions = {
         gtoken: payload.id_token,
       },
     })
-      .then((data) => {
+      .then(({ data }) => {
         http.defaults.headers.common.gAuth = payload.id_token;
         commit(AUTH_LOGIN_SUCCESS, { accessToken: payload.id_token, userInfo: data });
         resolve(data);

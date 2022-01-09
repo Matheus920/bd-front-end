@@ -48,10 +48,11 @@ export default {
   },
   computed: {
     userName() {
-      return this.$store.getters.userData.data.nome_usuario;
+      console.log(this.$store.getters.userData);
+      return this.$store.getters.userData?.nome_usuario;
     },
     userProfilePic() {
-      return this.$store.getters.userData.data.imagem_perfil;
+      return this.$store.getters.userData?.imagem_perfil;
     },
   },
   methods: {
