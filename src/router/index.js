@@ -5,6 +5,8 @@ import Events from '../views/Events.vue';
 import NotFound from '../views/NotFound.vue';
 import User from '../views/User.vue';
 import Profile from '../views/Profile.vue';
+import Activities from '../views/Activities.vue';
+import UserEvents from '../views/UserEvents.vue';
 import store from '../store';
 
 // eslint-disable-next-line consistent-return
@@ -39,6 +41,18 @@ const routes = [
         name: 'Profile',
         beforeEnter: isAuthenticated,
         component: Profile,
+      },
+      {
+        path: '/Activities',
+        name: 'Activities',
+        beforeEnter: isAuthenticated,
+        component: Activities,
+      },
+      {
+        path: '/UserEvents',
+        name: 'UserEvents',
+        beforeEnter: isAuthenticated,
+        component: UserEvents,
       },
     ],
   },

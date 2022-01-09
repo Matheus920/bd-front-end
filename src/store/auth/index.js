@@ -55,7 +55,7 @@ const actions = {
       },
     })
       .then(({ data }) => {
-        http.defaults.headers.common.gAuth = payload.id_token;
+        http.defaults.headers.common.gtoken = payload.id_token;
         commit(AUTH_LOGIN_SUCCESS, { accessToken: payload.id_token, userInfo: data });
         resolve(data);
       })

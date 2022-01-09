@@ -17,26 +17,25 @@ const state = {
   profileActivitiesStatus: '',
 };
 const getters = {
-  featuredEventsStatus: (state) => state.profileActivitiesStatus,
+  profileActivitiesStatus: (state) => state.profileActivitiesStatus,
 };
 const mutations = {
   [PROFILE_ACTIVITIES_REQUEST]: (state) => {
-    state.featuredEventsStatus = 'loading';
+    state.profileActivitiesStatus = 'loading';
   },
   [PROFILE_ACTIVITIES_SUCCESS]: (state) => {
-    state.featuredEventsStatus = 'success';
+    state.profileActivitiesStatus = 'success';
   },
   [PROFILE_ACTIVITIES_FAILED]: (state) => {
-    state.featuredEventsStatus = 'error';
+    state.profileActivitiesStatus = 'error';
   },
 };
 const actions = {
   [PROFILE_ACTIVITIES_REQUEST]: ({ commit }) => new Promise((resolve, reject) => {
     commit(PROFILE_ACTIVITIES_REQUEST);
-
     http({
       method: 'get',
-      url: '/activities/',
+      url: '/events/participated',
     })
       .then(({ data }) => {
         commit(PROFILE_ACTIVITIES_SUCCESS);

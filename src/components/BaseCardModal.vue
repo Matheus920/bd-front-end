@@ -12,34 +12,64 @@
           <span class="font-bold">Descrição:</span>
           {{ data.descricao_evento }}
         </p>
-        <div class="modal__activities">
-          <h3>Atividades:</h3>
-          <div v-for="(activity, index) in data.atividades" :key="index" class="modal__activity">
-            <div class="max-w-1/2">
-              <span class="font-bold"> {{ activity.nome_atividade }}</span>
-              <p class="mt-1">{{ activity.descricao_atividade }}</p>
+        <div class="overflow-auto">
+          <h3 class="modal__activity-title">Atividades:</h3>
+          <template v-if="data.atividades && data.atividades.length >= 0">
+            <div
+              v-for="(activity, index) in data.atividades"
+              :key="index"
+              class="modal__activities"
+            >
+              <div
+                v-for="(local, localIndex) in activity.realizacao_atividades"
+                :key="localIndex"
+                class="modal__activity"
+              >
+                <div class="max-w-1/2">
+                  <span class="font-bold"> {{ activity.nome_atividade }}</span>
+                  <p class="mt-1">{{ activity.descricao_atividade }}</p>
+                  <span>
+                    <span class="font-bold">local: </span>
+                    {{ local.local.endereco.cidade }}, {{ local.local.endereco.estado }},
+                    {{ local.local.endereco.logradouro }}
+                  </span>
+                  <br />
+                  <br />
+
+                  <span class="font-bold"> {{ activity.nome_atividade }}</span>
+                </div>
+                <div>
+                  <button
+                    v-if="isAuthenticated && !local.inscrito"
+                    class="btn modal__activity-join"
+                    @click="joinActivity(activity.id_atividade, local.id_local)"
+                  >
+                    Inscrever-se
+                  </button>
+                  <button
+                    v-else-if="isAuthenticated && local.inscrito"
+                    class="btn modal__activity-leave"
+                    @click="leaveActivity(activity.id_atividade, local.id_local)"
+                  >
+                    Cancelar Inscrição
+                  </button>
+                  <span v-else>
+                    Faça login para inscrever-se
+                  </span>
+                </div>
+                <div class="flex flex-col w-full mt-1">
+                  <span>
+                    <span class="font-bold">Data de inicio:</span>
+                    {{ activity.data_inicial | luxon }}
+                  </span>
+                  <span>
+                    <span class="font-bold">Data de fim:</span>
+                    {{ activity.data_final | luxon }}
+                  </span>
+                </div>
+              </div>
             </div>
-            <div>
-              <button
-                v-if="isAuthenticated"
-                class="btn modal__activity-join"
-                @click="joinActivity(activity.id_atividade)"
-              > Se inscrever </button>
-              <span v-else>
-                Faça login para inscrever-se
-              </span>
-            </div>
-            <div class="flex flex-col w-full mt-1">
-              <span>
-                <span class="font-bold">Data de inicio:</span>
-                  {{ activity.data_inicial | luxon }}
-                </span>
-              <span>
-                <span class="font-bold">Data de fim:</span>
-                  {{ activity.data_final | luxon }}
-                </span>
-            </div>
-          </div>
+          </template>
         </div>
       </template>
     </div>
@@ -47,7 +77,9 @@
 </template>
 
 <script>
-import { SELECT_EVENT, GET_EVENT_REQUEST, JOIN_EVENT } from '@/store/events/actions';
+import {
+  LEAVE_EVENT, SELECT_EVENT, GET_EVENT_REQUEST, JOIN_EVENT,
+} from '@/store/events/actions';
 import BaseLoader from '@/components/BaseLoader.vue';
 
 export default {
@@ -80,8 +112,7 @@ export default {
     },
     getEventDetails() {
       this.$store
-        .dispatch(GET_EVENT_REQUEST, this.eventId)
-        .then((data) => {
+        .dispatch(GET_EVENT_REQUEST, this.eventId).then((data) => {
           this.data = data;
           console.log(data);
         })
@@ -89,8 +120,16 @@ export default {
           console.log(err);
         });
     },
-    joinActivity(activityId) {
-      this.$store.dispatch(JOIN_EVENT, activityId)
+    joinActivity(activityId, localId) {
+      this.$store
+        .dispatch(JOIN_EVENT, { id_atividade: activityId, id_local: localId })
+        .finally(() => {
+          this.getEventDetails();
+        });
+    },
+    leaveActivity(activityId, localId) {
+      this.$store
+        .dispatch(LEAVE_EVENT, { id_atividade: activityId, id_local: localId })
         .finally(() => {
           this.getEventDetails();
         });
@@ -163,20 +202,20 @@ export default {
       font-size: 1.5em;
       margin-bottom: 1rem;
     }
+    #{ $self }__activity-title {
+      color: $dark-blue;
+      font-weight: bold;
+      border-bottom: 1px solid rgb(158, 158, 158);
+      padding: 0 0 0.5rem;
+      margin-top: 1rem;
+    }
     #{ $self }__activities {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      margin-top: 1rem;
       overflow: auto;
       padding: 2rem;
-      h3 {
-        color: $dark-blue;
-        font-weight: bold;
-        border-bottom: 1px solid rgb(158, 158, 158);
-        padding: 0 0 0.5rem;
-        margin-bottom: 1rem;
-      }
+      margin-bottom: 1rem;
       #{ $self }__activity {
         display: flex;
         flex-wrap: wrap;
@@ -198,6 +237,16 @@ export default {
           border-radius: 5px;
           &:hover {
             background-color: $dark-blue;
+          }
+        }
+        #{ $self }__activity-leave {
+          font-weight: bold;
+          padding: 0.25rem 1rem 0.25rem;
+          color: white;
+          background-color: rgb(212, 75, 75);
+          border-radius: 5px;
+          &:hover {
+            background-color: rgb(143, 49, 49);
           }
         }
       }

@@ -25,13 +25,13 @@
       <Button
         icon="calendar-edit"
         text="Criar Evento"
-        viewName="Event"
+        viewName="UserEvents"
         @optionSelected="changeView"
       />
       <Button
-        icon="certificate"
-        text="Listar Certificados"
-        viewName="Certificates"
+        icon="keyboard-return"
+        text="Voltar Home"
+        viewName="Home"
         @optionSelected="changeView"
       />
     </div>

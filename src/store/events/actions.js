@@ -9,5 +9,6 @@ export const GET_EVENT_REQUEST = 'GET_EVENT_REQUEST';
 export const GET_EVENT_SUCCESS = 'GET_EVENT_SUCCESS';
 export const GET_EVENT_FAILED = 'GET_EVENT_FAILED';
 export const JOIN_EVENT = 'JOIN_EVENT';
+export const LEAVE_EVENT = 'LEAVE_EVENT';
 export const SELECT_EVENT = 'SELECT_EVENT';
 export const CREATE_EVENT = 'CREATE_EVENT';

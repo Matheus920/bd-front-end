@@ -16,6 +16,7 @@ import {
   GET_EVENT_FAILED,
   SET_SEARCH_STATUS,
   JOIN_EVENT,
+  LEAVE_EVENT,
   SELECT_EVENT,
 } from './actions';
 
@@ -108,10 +109,24 @@ const actions = {
   [SET_SEARCH_STATUS]: ({ commit }, status) => {
     commit(SET_SEARCH_STATUS, status);
   },
-  [JOIN_EVENT]: (commit, activityId) => new Promise((resolve, reject) => {
+  [JOIN_EVENT]: (commit, payload) => new Promise((resolve, reject) => {
     http({
-      method: 'get',
-      url: `/activities/subscribe/${activityId}`,
+      method: 'post',
+      url: '/activities/subscribe',
+      data: payload,
+    })
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [LEAVE_EVENT]: (commit, payload) => new Promise((resolve, reject) => {
+    http({
+      method: 'post',
+      url: '/activities/unsubscribe',
+      data: payload,
     })
       .then((data) => {
         resolve(data);
@@ -123,7 +138,6 @@ const actions = {
   [GET_EVENT_REQUEST]: ({ commit, getters }, eventId) => new Promise((resolve, reject) => {
     commit(GET_EVENT_REQUEST);
     const url = getters.isAuthenticated ? `/events/${eventId}?email=${getters.userData.email}` : `/events/${eventId}`;
-    debugger;
     http({
       method: 'get',
       url,

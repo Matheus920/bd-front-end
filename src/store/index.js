@@ -6,6 +6,7 @@ import createPersistedState from 'vuex-persistedstate';
 import * as Cookies from 'js-cookie';
 import auth from './auth';
 import events from './events';
+import profile from './profile';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     events,
+    profile,
   },
   plugins: [
     createPersistedState({
