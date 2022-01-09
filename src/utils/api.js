@@ -3,6 +3,7 @@
 /* eslint-disable import/no-cycle */
 import axios from 'axios';
 import store from '@/store';
+import router from '@/router';
 import { AUTH_LOGOUT } from '@/store/auth/actions';
 
 class Http {
@@ -27,6 +28,7 @@ class Http {
           if (sessionStorage.getItem('token')) {
             sessionStorage.removeItem('token');
             store.dispatch(AUTH_LOGOUT);
+            router.push({ name: 'Home' });
           }
           return Promise.reject(error);
         }

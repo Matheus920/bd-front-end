@@ -18,6 +18,8 @@ import {
   JOIN_EVENT,
   LEAVE_EVENT,
   SELECT_EVENT,
+  LIST_GROUPS,
+  CREATE_EVENT,
 } from './actions';
 
 const { http } = api.getInstance();
@@ -148,6 +150,31 @@ const actions = {
       })
       .catch((error) => {
         commit(GET_EVENT_FAILED);
+        reject(error);
+      });
+  }),
+  [LIST_GROUPS]: () => new Promise((resolve, reject) => {
+    http({
+      method: 'get',
+      url: '/categories',
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [CREATE_EVENT]: (payload) => new Promise((resolve, reject) => {
+    http({
+      method: 'post',
+      url: '/events',
+      data: payload,
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
         reject(error);
       });
   }),

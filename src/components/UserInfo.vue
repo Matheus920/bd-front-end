@@ -48,7 +48,6 @@ export default {
   },
   computed: {
     userName() {
-      console.log(this.$store.getters.userData);
       return this.$store.getters.userData?.nome_usuario;
     },
     userProfilePic() {
@@ -74,6 +73,7 @@ export default {
   &__header {
     width: 100%;
     height: 20vh;
+    padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -84,6 +84,7 @@ export default {
     flex-flow: nowrap;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
     width: 100%;
   }
   &__header_separator {
@@ -92,9 +93,10 @@ export default {
   }
   &__rounded_image {
     border-radius: 50%;
+    height: 50px;
   }
   &__centered_span {
-    width: 100%;
+
   }
   &__list {
     display: flex;
