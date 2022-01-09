@@ -2,10 +2,9 @@
     <div class="user">
       <div class="user__content">
           <UserInfo class="user__sidebar" @viewChanged="setCurrentView"/>
+          <router-view></router-view>
       </div>
-          {{currentView}}
-          <router-view :name=currentView></router-view>
-          <TheFooter />
+          <TheFooter class="user__footer"/>
     </div>
 </template>
 
@@ -14,19 +13,17 @@ import TheFooter from '../components/TheFooter.vue';
 import UserInfo from '@/components/UserInfo.vue';
 
 export default {
-  data() {
-    return {
-      currentView: 'EditProfile',
-    };
-  },
   components: {
     TheFooter,
     UserInfo,
   },
   methods: {
     setCurrentView(viewName) {
-      this.currentView = viewName;
+      this.$router.push({ name: viewName });
     },
+  },
+  mounted() {
+    this.$router.push({ name: 'Profile' });
   },
 };
 </script>
@@ -38,9 +35,13 @@ export default {
   flex-direction: column;
   height: 100vh;
   &__content {
+    display: flex;
     flex: 1 0 auto;
     #{ $self }__sidebar {
     }
+  }
+  &__footer {
+    margin: 0;
   }
 }
 </style>
