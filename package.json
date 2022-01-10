@@ -10,6 +10,7 @@
   "dependencies": {
     "@mdi/font": "^6.5.95",
     "@tailwindcss/postcss7-compat": "^2.0.2",
+    "@vue/compiler-sfc": "^3.2.26",
     "autoprefixer": "^9",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
