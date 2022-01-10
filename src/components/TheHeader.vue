@@ -45,9 +45,6 @@
       > Sair </button>
     </div>
     <div v-else class="user-actions w-30 flex w-1/5 gap-1.5">
-      <button class="btn sign-in" @click="handleClickSignIn">
-        Sign-in
-      </button>
       <button class="btn login" @click="handleClickLogin">
         Login
       </button>

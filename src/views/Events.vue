@@ -11,9 +11,9 @@
 </template>
 
 <script>
+import BaseCardModal from '@/components/BaseCardModal.vue';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '../components/TheFooter.vue';
-import BaseCardModal from '@/components/BaseCardModal.vue';
 import EventsList from '../components/EventsList.vue';
 
 export default {

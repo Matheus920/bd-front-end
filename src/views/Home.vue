@@ -13,13 +13,13 @@
 </template>
 
 <script>
+import { SET_SEARCH_STATUS } from '@/store/events/actions';
 import TheHeader from '@/components/TheHeader.vue';
 import HeaderSearchPreview from '@/components/HeaderSearchPreview.vue';
 import TheBanner from '@/components/TheBanner.vue';
 import BaseCardModal from '@/components/BaseCardModal.vue';
 import TheFooter from '../components/TheFooter.vue';
 import FeaturedEvents from '../components/FeaturedEvents.vue';
-import { SET_SEARCH_STATUS } from '@/store/events/actions';
 
 // import Categories from '@/components/Categories.vue';
 
