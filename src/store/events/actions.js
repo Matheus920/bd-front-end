@@ -20,3 +20,7 @@ export const LIST_HOST = 'LIST_HOST';
 export const CREATE_HOST = 'CREATE_HOST';
 export const LIST_RAMO_HOST = 'LIST_RAMO_HOST';
 export const CREATE_RAMO_HOST = 'CREATE_RAMO_HOST';
+export const LIST_LOCAL = 'LIST_LOCAL';
+export const CREATE_LOCAL = 'CREATE_LOCAL';
+export const LIST_ADDRESS = 'LIST_ADDRESS';
+export const CREATE_ADDRESS = 'CREATE_ADDRESS';

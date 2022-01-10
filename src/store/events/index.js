@@ -20,6 +20,17 @@ import {
   SELECT_EVENT,
   LIST_GROUPS,
   CREATE_EVENT,
+  CREATE_GROUPS,
+  LIST_CATEGORIES,
+  CREATE_CATEGORIES,
+  LIST_HOST,
+  CREATE_HOST,
+  LIST_RAMO_HOST,
+  CREATE_RAMO_HOST,
+  LIST_LOCAL,
+  CREATE_LOCAL,
+  LIST_ADDRESS,
+  CREATE_ADDRESS,
 } from './actions';
 
 const { http } = api.getInstance();
@@ -165,7 +176,7 @@ const actions = {
         reject(error);
       });
   }),
-  [CREATE_EVENT]: (payload) => new Promise((resolve, reject) => {
+  [CREATE_EVENT]: (commit, payload) => new Promise((resolve, reject) => {
     http({
       method: 'post',
       url: '/events',
@@ -178,6 +189,145 @@ const actions = {
         reject(error);
       });
   }),
+  [CREATE_GROUPS]: (payload) => new Promise((resolve, reject) => {
+    http({
+      method: 'post',
+      url: '/groups',
+      data: payload,
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [LIST_CATEGORIES]: () => new Promise((resolve, reject) => {
+    http({
+      method: 'get',
+      url: '/categories',
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [CREATE_CATEGORIES]: (payload) => new Promise((resolve, reject) => {
+    http({
+      method: 'post',
+      url: '/categories',
+      data: payload,
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [LIST_HOST]: () => new Promise((resolve, reject) => {
+    http({
+      method: 'get',
+      url: '/hosts',
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [CREATE_HOST]: (payload) => new Promise((resolve, reject) => {
+    http({
+      method: 'post',
+      url: '/hosts',
+      data: payload,
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [LIST_RAMO_HOST]: () => new Promise((resolve, reject) => {
+    http({
+      method: 'get',
+      url: '/hostBranches',
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [CREATE_RAMO_HOST]: (payload) => new Promise((resolve, reject) => {
+    http({
+      method: 'post',
+      url: '/hostBranches',
+      data: payload,
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [LIST_LOCAL]: () => new Promise((resolve, reject) => {
+    http({
+      method: 'get',
+      url: '/places',
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [CREATE_LOCAL]: (payload) => new Promise((resolve, reject) => {
+    http({
+      method: 'post',
+      url: '/places',
+      data: payload,
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [LIST_ADDRESS]: () => new Promise((resolve, reject) => {
+    http({
+      method: 'get',
+      url: '/addresses',
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+  [CREATE_ADDRESS]: (payload) => new Promise((resolve, reject) => {
+    http({
+      method: 'post',
+      url: '/addresses',
+      data: payload,
+    })
+      .then(({ data }) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }),
+
 };
 
 export default {
