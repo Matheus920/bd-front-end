@@ -7,6 +7,7 @@ import User from '../views/User.vue';
 import Profile from '../views/Profile.vue';
 import Activities from '../views/Activities.vue';
 import UserEvents from '../views/UserEvents.vue';
+// eslint-disable-next-line import/no-cycle
 import store from '../store';
 
 // eslint-disable-next-line consistent-return

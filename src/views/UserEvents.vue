@@ -352,7 +352,7 @@ export default {
         data_final: atividade.data_final,
         capacidade_participantes: atividade.capacidade_participantes,
         descricao_atividade: atividade.descricao_atividade,
-        id_categoria: atividade.id_categoria.value,
+        id_categoria: atividade.categories.value,
         locais: [{ id_local: atividade.local.value }],
         apresentadores: [{ id_apresentador: atividade.host.value }],
       }));
